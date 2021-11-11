@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block contents %}
+<div class="row">
+    <div class="col-md-5">
+        <div class="card mx-4 my-4 shadow">
+            <h4 class="card-header display-6 fs-2 alert alert-danger">Add Your Todo</h4>
+            <div class="card-body">
+                <form action="{% url 'home' %}" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-danger" type="submit">Add Todo</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    {% if todo %}
+    <div class="col-md-7">
+        <div class="card mx-4 my-4 shadow">
+            <h4 class="card-header alert alert-danger">Your Todos</h4>
+            <div class="card-body">
+                <table class="table table-danger">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Date Added</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for todo in todo %}
+                        <tr class="text-uppercase">
+                            <th scope="row">{{ forloop.counter }}</th>
+                            {% if todo.completed == True %}
+                            <td><strike>{{ todo.title }}</strike></td>
+                            <td><strike>{{ todo.description }}</strike></td>
+                            <td><strike>{{ todo.date_added }}</strike></td>
+                            <td>
+                                <a class="btn btn-danger btn-sm" href="{% url 'update' todo.id %}">Update</a>
+                                <a class="btn btn-danger btn-sm" href="{% url 'delete' todo.id %}">Delete</a>
+                                &cross;
+                            </td>
+                            {% else %}
+                            <td>{{ todo.title }}</td>
+                            <td>{{ todo.description }}</td>
+                            <td>{{ todo.date_added }}</td>
+                            <td>
+                                <a class="btn btn-danger btn-sm" href="{% url 'update' todo.id %}">Update</a>
+                                <a class="btn btn-danger btn-sm" href="{% url 'delete' todo.id %}">Delete</a>
+                            </td>
+                            {% endif %}
+                                
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    {% else %}
+    <div class="col-md-7">
+        <div class="alert alert-danger my-5 mx-5 display-6 shadow-lg">No Todo's Found......</div>
+    </div>   
+    {% endif %}
+        
+
+</div>
+{% endblock contents %}

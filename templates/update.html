@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block contents %}
+<div class="row">
+  <div class="col">
+    <div class="card mx-4 my-4 shadow w-50 content-center">
+      <h4 class="card-header alert alert-danger">Update Your Todo</h4>
+      <div class="card-body">
+        <form action="" method="POST">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input class="btn btn-danger btn-sm" type="submit" value="Update Todo"></input>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endblock contents %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+<nav class="nav-link">
+  {% block head_title %}{% trans "Signup" %}{% endblock %}
+</nav>
+
+{% block contents %}
+<div class="card w-25 m-auto shadow mt-4 text-center">
+
+  <h1 class="card-header alert alert-danger display-6">{% trans "Sign Up" %}</h1>
+  <div class="card-body">
+    <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
+    </p>
+
+    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+      {% csrf_token %}
+      
+      {% for feild in form %}
+        {{ feild }} <br>
+      {% endfor %}
+        
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+      <button class="btn btn-danger" type="submit">{% trans "Sign Up" %} &raquo;</button>
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}
